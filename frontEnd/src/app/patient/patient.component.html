@@ -1,0 +1,88 @@
+<h3 style="display: inline-block;">Vital Signs</h3>
+<button type="button" class="btn btn-info btn-md" style="float: right;margin-top: 15px;" data-toggle="modal" data-target="#myModal">Add Report</button>
+
+<div class="" style="box-shadow: 0 15px 20px rgba(0, 0, 0, 0.3);">
+    <!-- <h2>Striped Rows</h2> -->
+    <!-- <p>The .table-striped class adds zebra-stripes to a table:</p> -->
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>PulseRate</th>
+                <th>BloodPressure</th>
+                <th>Temprature</th>
+                <th>Weight</th>
+                <th>Comments</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let record of patientRecords">
+                <td>{{ record.pulseRate }}</td>
+                <td>{{ record.bloodPressure }}</td>
+                <td>{{ record.temprature }}</td>
+                <td>{{ record.weight }}</td>
+                <td>{{ record.comments }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" style="display: inline;">Create Record</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <!-- <h2>Register</h2> -->
+                <form [formGroup]="recordForm" (ngSubmit)="onSubmit()">
+                    <div class="form-group">
+                        <label for="pulseRate">Pulserate</label>
+                        <input type="text" formControlName="pulseRate" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.pulseRate.errors }"
+                        />
+                        <div *ngIf="submitted && f.pulseRate.errors" class="invalid-feedback">
+                            <div *ngIf="f.pulseRate.errors.required">First Name is required</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="bloodPressure">Bloodpressure</label>
+                        <input type="text" formControlName="bloodPressure" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.bloodPressure.errors }"
+                        />
+                        <div *ngIf="submitted && f.bloodPressure.errors" class="invalid-feedback">
+                            <div *ngIf="f.bloodPressure.errors.required">Last Name is required</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="temprature">Temprature</label>
+                        <input type="text" formControlName="temprature" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.temprature.errors }"
+                        />
+                        <div *ngIf="submitted && f.temprature.errors" class="invalid-feedback">
+                            <div *ngIf="f.temprature.errors.required">Temprature is required</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="weight">weight</label>
+                        <input type="text" formControlName="weight" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.weight.errors }"
+                        />
+                        <div *ngIf="submitted && f.weight.errors" class="invalid-feedback">
+                            <div *ngIf="f.weight.errors.required">weight is required</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="comments">Comments</label>
+                        <textarea type="text" formControlName="comments" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.comments.errors }"
+                        ></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="createRecord()">Add</button>
+            </div>
+        </div>
+
+    </div>
+</div>

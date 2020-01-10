@@ -1,0 +1,68 @@
+<h3 >All Patients:</h3>
+<!-- <ul>
+    <li *ngFor="let user of users" (click)="getUserDetails(user.id)">
+        {{user.username}} ({{user.firstName}} {{user.lastName}})
+        - <a (click)="deleteUser(user.id)" class="text-danger">Delete</a>
+    </li>
+</ul> -->
+
+<div class="" style="box-shadow: 0 15px 20px rgba(0, 0, 0, 0.3);">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>FirstName</th>
+                <th>LastName</th>
+                <th>Tel Number</th>
+                <th>Send Quote</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let user of users">
+                <td (click)="getUserDetails(user.id)">{{ user.firstName }}</td>
+                <td>{{ user.lastName }}</td>
+                <td>{{ user.tel }}</td>
+                <td>
+                     <!-- <p><span class="glyphicon glyphicon-envelope"></span></p>  -->
+                     <button type="button" class="btn btn-info btn-sm"
+                     data-toggle="modal" data-target="#myModal"
+                     (click)="setCurrentPatient(user)">
+                        <span class="glyphicon glyphicon-envelope"></span>
+                    </button> 
+                </td>
+                <td><a (click)="deleteUser(user.id)" class="text-danger">Delete</a></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" style="display: inline;">Send Quote to {{ currentPatient?.firstName }}</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <!-- <h2>Register</h2> -->
+                <form [formGroup]="quoteForm" (ngSubmit)="onSubmit()">
+                    <div class="form-group">
+                        <label for="quote">Quote</label>
+                        <textarea type="text" formControlName="quote" class="form-control" [ngClass]="{ 'is-invalid': submitted && quoteForm.quote.errors }"
+                        ></textarea>
+                        <div *ngIf="submitted && quoteForm.quote.errors" class="invalid-feedback">
+                            <div *ngIf="quoteForm.quote.errors.required">Quote is required</div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="sendQuote()">Send</button>
+            </div>
+        </div>
+
+    </div>
+</div>

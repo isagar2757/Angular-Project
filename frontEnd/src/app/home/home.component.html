@@ -1,0 +1,72 @@
+﻿<div>
+    <div style="display: inline-block; margin-left: 10%">
+    <h1>Hi {{currentUser.firstName}}!</h1>
+    <p>Hope you are doing good today!!</p>
+    <!-- <p *ngIf="currentUser?.role==='patient'">Feeling Unhealthy? Check your symptoms 
+        <a href="https://symptoms.webmd.com" target="_blank">here</a>
+        </p>  -->
+    </div>
+    <button *ngIf="currentUser?.role==='patient'" type="button" class="btn  btn-lg" style="float:right;margin-top:22px;margin-right: 10%" data-toggle="modal" data-target="#myModal">
+    <span ></span>
+        Send Message
+    </button>
+</div>
+
+<blockquote *ngIf="currentUser?.role==='patient' && quote && hasUnresolvedAlerts()" style="margin-top:20px;box-shadow: 0 15px 20px rgba(0, 0, 0, 0.3);">
+    {{ quote?.quote }}
+</blockquote>
+
+
+<div class="" *ngIf="!hasUnresolvedAlerts()"  style="margin-top:20px;box-shadow: 0 15px 20px rgba(0, 0, 0, 0.3);">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Username</th>
+                <th>Tel Number</th>
+                <th>Message</th>
+                <th>Resolved</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let notification of notifications">
+                <td>{{ notification.username }}</td>
+                <td>{{ notification.tel }}</td>
+                <td>{{ notification.alert }}</td>
+                <td>
+                    <input type="checkbox" [checked]="notification.resolved" (click)="resolveAlert(notification, $event.target.checked)"/>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" style="display: inline;">Send Alert</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <!-- <h2>Register</h2> -->
+                <form [formGroup]="notificationForm">
+                    <div class="form-group">
+                        <label for="alert">Message</label>
+                        <textarea type="text" formControlName="alert" class="form-control" [ngClass]="{ 'is-invalid': submitted && notificationForm.alert.errors }"
+                        ></textarea>
+                        <div *ngIf="submitted && notificationForm.alert.errors" class="invalid-feedback">
+                            <div *ngIf="notificationForm.alert.errors.required">Alert message is required</div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="sendNotification()">Send</button>
+            </div>
+        </div>
+
+    </div>
+</div>

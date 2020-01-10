@@ -1,0 +1,56 @@
+﻿<!-- nav -->
+<!-- <nav class="navbar navbar-expand navbar-dark bg-dark" *ngIf="currentUser">
+    <div class="navbar-nav">
+        <a class="nav-item nav-link" routerLink="/">Home</a>
+        <a class="nav-item nav-link" routerLink="/patient-list">Patients</a>
+        <a class="nav-item nav-link" style="float:right;" (click)="logout()">Logout</a>
+    </div>
+</nav> -->
+
+<nav class="navbar navbar-inverse" *ngIf="currentUser">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" routerLink="/">HealthCare</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li><a routerLink="/">
+                <span class="glyphicon glyphicon-home"></span>
+                Home</a></li>
+            <li *ngIf="currentUser?.role==='nurse'">
+                <a routerLink="/patient-list">
+                    <span class="glyphicon glyphicon-user"></span>
+                    Patients</a></li>
+            <li *ngIf="currentUser?.role==='patient'">
+                <a routerLink="{{ '/patient/'+currentUser._id}}">
+                    <span class="glyphicon glyphicon-paste"></span>
+                    Reports</a></li>
+            <li *ngIf="currentUser?.role==='patient'">
+                <a routerLink="/inspire">
+                <!-- <span class="glyphicon glyphicon-home"></span> -->
+                Inspire</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <!-- <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li> -->
+            <li (click)="logout()"><a><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+        </ul>
+    </div>
+</nav>
+
+<!-- main app container -->
+<!-- <div class="jumbotron"> -->
+<div>
+    <div class="row">
+        <div class="col-sm-6 offset-sm-3">
+            <alert></alert>
+        </div>
+    </div>
+    <router-outlet></router-outlet>
+</div>
+<!-- </div> -->
+
+<!-- credits -->
+<!-- <div class="text-center">
+    <p>
+        <a>HealthCare</a>
+    </p>
+</div> -->
